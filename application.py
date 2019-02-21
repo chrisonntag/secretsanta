@@ -23,8 +23,6 @@ PROJ_DIR = os.path.dirname(os.path.abspath(__file__))
 config = configparser.RawConfigParser()
 config.read(os.path.join(PROJ_DIR, 'config.cfg'))
 
-BASE_URL =
-
 
 STATIC_DIR = '/static'
 
@@ -35,8 +33,8 @@ app.config['MAIL_SERVER']= config.get('mail', 'host')
 app.config['MAIL_PORT'] = config.get('mail', 'port')
 app.config['MAIL_USERNAME'] = config.get('mail', 'user')
 app.config['MAIL_PASSWORD'] = config.get('mail', 'password')
-app.config['MAIL_USE_TLS'] = config.get('mail', 'tls')
-app.config['MAIL_USE_SSL'] = config.get('mail', 'ssl')
+app.config['MAIL_USE_TLS'] = config.getboolean('mail', 'tls')
+app.config['MAIL_USE_SSL'] = config.getboolean('mail', 'ssl')
 mail = Mail(app)
 
 def print_exceptions(fn):
