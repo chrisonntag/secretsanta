@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Secret Santa</title>
+    <link rel="shortcut icon" href="images/fav_icon.png" type="image/x-icon">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css'>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body>
+
+        <!-- START NAV -->
+        <nav class="navbar">
+                <div class="container">
+
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="#">
+                            <img src="images/bulma.png" alt="Logo">
+                        </a>
+                        <span class="navbar-burger burger" data-target="navbarMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </div>
+
+                    <div id="navbarMenu" class="navbar-menu">
+                        <div class="navbar-end">
+                            <a href="/" class="navbar-item is-active">
+                                Home
+                            </a>
+                            <a href="/create" class="navbar-item">
+                                Erstellen
+                            </a>
+                            <!--
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link">
+                                    Login
+                                </a>
+                                <div class="navbar-dropdown">
+
+                                    <a class="navbar-item">Login</a>
+
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- END NAV -->
+
+    <div class="container">
+        <div class="section">
+            <!-- Developers -->
+            <div class="row columns">
+    
+                {% for game in games %}
+
+                <div class="column is-one-third">
+                    <div class="card large">
+                        <div class="card-image">
+                            <a href="/games/{{game.uuid}}">
+                                <figure class="image">
+                                    <img src="{{game.imageurl}}" alt="Image">
+                                </figure>
+                            </a>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <a href="/games/{{game.uuid}}"><h2>{{game.name}}</h2></a>
+                                {{game.text}}
+                            </div>
+
+
+                            <div class="row columns">
+                                <div class="column is-half">
+                                    <a href="/register?g={{game.uuid}}" class="button is-block is-info is-medium">Teilnehmen</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+         
+            </div>
+        </div>
+    </div>
+
+
+    <script src="js/bulma.js"></script>
+
+
+</body>
+
+</html>

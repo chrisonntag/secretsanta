@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Secret Santa</title>
+    <link rel="shortcut icon" href="images/fav_icon.png" type="image/x-icon">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css'>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body>
+
+        <!-- START NAV -->
+        <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="#">
+                                <img src="images/bulma.png" alt="Logo">
+                            </a>
+                        <span class="navbar-burger burger" data-target="navbarMenu">
+                                <span></span>
+                        <span></span>
+                        <span></span>
+                        </span>
+                    </div>
+                    <div id="navbarMenu" class="navbar-menu">
+                        <div class="navbar-end">
+                            <a href="/" class="navbar-item">
+                                Home
+                            </a>
+                            <a href="/create" class="navbar-item">
+                                Erstellen
+                            </a>
+                            <!-- 
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link">
+                                    Login
+                                </a>
+                                <div class="navbar-dropdown">
+                                    <a class="navbar-item">
+                                            Dashboard
+                                        </a>
+                                    <a class="navbar-item">
+                                            Profile
+                                        </a>
+                                    <a class="navbar-item">
+                                            Settings
+                                        </a>
+                                    <hr class="navbar-divider">
+                                    <div class="navbar-item">
+                                        Logout
+                                    </div>
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- END NAV -->
+
+     <section class="hero">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="column is-4 is-offset-4">
+                    <h3 class="title has-text-white">Teilnehmen</h3>
+                    <p class="subtitle has-text-white">Sobald jeder registriert ist, wird ausgelost und jeder Teilnehmer erhält eine E-Mail mit dem jeweiligen Lospartner.</p>
+                    <div class="box">
+                        <form method="post">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-medium" type="text" name="name" placeholder="Dein Name" autofocus="">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-medium" type="email" name="email" placeholder="Deine Email">
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="game" value="{{game}}" />
+                            <input type="submit" class="button is-block is-info is-large is-fullwidth" value="Teilnehmen"></input>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>   
+
+    <script src="js/bulma.js"></script>
+
+
+</body>
+
+</html>

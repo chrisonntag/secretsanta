@@ -1,0 +1,56 @@
+html, body {
+background: #041221;
+}
+.card {overflow:hidden}
+.card.large {
+height: auto;
+-webkit-backface-visibility: hidden;
+backface-visibility: initial;
+border-radius: 5px;
+}
+.media-content {
+overflow: hidden;
+}
+.title.no-padding {
+margin-bottom: 0 !important;
+}
+.footer{
+background-color: #222831;
+color: lemonchiffon;
+}
+.footer p, strong
+{color: lemonchiffon}
+.footer a:hover
+{color: crimson;}
+.fa
+{color: lemonchiffon;
+    margin: 10px}
+
+.hero .nav, .hero.is-success .nav {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.box {
+  margin-top: 2rem;
+}
+.avatar {
+  margin-top: -70px;
+  padding-bottom: 20px;
+}
+.avatar img {
+  padding: 5px;
+  background: #fff;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+  box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+}
+input {
+  font-weight: 300;
+}
+p {
+  font-weight: 700;
+}
+p.subtitle {
+  padding-top: 1rem;
+}
+
