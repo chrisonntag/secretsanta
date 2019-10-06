@@ -200,7 +200,7 @@ def trigger_view():
                 partner = Partner.get(Partner.donor == participant, Partner.game == game)
                 url = request.url_root + 'user/' + str(participant.uuid)
                 msg = Message('Secret Santa: Auslosung', sender = config.get('mail', 'from'), recipients=[participant.mail])
-                msg.body = "Hallo %s,\n\n dein ausgeloster Partner ist %s. Damit niemand seinen Partner vergisst, kannst du in Zukunft unter %s nachschauen, wer der glückliche ist." % (participant.name, partner.gifted.name, url)
+                msg.body = "Hallo %s,\n\n dein ausgeloster Partner ist %s. Damit niemand seinen Partner vergisst, kannst du in Zukunft unter %s nachschauen, wer es ist." % (participant.name, partner.gifted.name, url)
                 mail.send(msg)
 
             return redirect(url_for('game_view', game=game.uuid))
