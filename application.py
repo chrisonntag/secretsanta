@@ -85,10 +85,10 @@ def after_request(response):
 
 @app.route('/', methods=['GET'])
 def root_view():
-    db_games = Game.select()
+    db_games = Game.select();
     games = []
     for game in db_games:
-        games.append({'name': game.name, 'imageurl': game.imageurl, 'text': game.text, 'uuid': game.uuid})
+        games.append({'name': game.name, 'imageurl': game.imageurl, 'text': game.text, 'uuid': game.uuid, 'triggered': game.triggered})
 
     if len(games) == 0:
         return redirect(url_for('create_view'))

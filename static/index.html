@@ -79,7 +79,9 @@
 
                             <div class="row columns">
                                 <div class="column is-half">
-                                    <a href="/register?g={{game.uuid}}" class="button is-block is-info is-medium">Teilnehmen</a>
+                                    {% if not game.triggered %}
+                                        <a href="/register?g={{game.uuid}}" class="button is-block is-info is-medium">Teilnehmen</a>
+                                    {% endif %}
                                 </div>
                             </div>
 
