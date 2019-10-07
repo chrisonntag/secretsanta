@@ -2,7 +2,7 @@ from peewee import *
 import datetime
 
 
-DATABASE = SqliteDatabase('secretsanta.db')
+DATABASE = SqliteDatabase('data.db')
 
 
 class BaseModel(Model):
