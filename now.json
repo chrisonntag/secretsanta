@@ -1,0 +1,10 @@
+{
+	"version": 2,
+	"name": "secretsanta",
+	"builds": [
+		{ "src": "application.py", "use": "@now/python" }
+	],
+	"routes": [
+		{ "src": "/(.*)", "dest": "application.py" }
+	]
+}
