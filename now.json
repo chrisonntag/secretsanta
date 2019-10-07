@@ -6,5 +6,11 @@
 	],
 	"routes": [
 		{ "src": "/(.*)", "dest": "application.py" }
-	]
+	],
+	"env": {
+    	"MAIL_SERVER": "@mail-server",
+    	"MAIL_PASS": "@mail-pass",
+    	"MAIL_USER": "@mail-user",
+    	"MAIL_PORT": "@mail-port"
+  	}
 }

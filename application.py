@@ -1,3 +1,4 @@
+import os
 import os.path
 import uuid
 from functools import wraps
@@ -6,7 +7,6 @@ import traceback
 import datetime
 import random
 import bleach
-import configparser
 from collections import defaultdict
 
 from flask import Flask, Response, render_template, make_response, url_for, redirect
@@ -20,21 +20,18 @@ from database import Game, Participant, Partner
 
 PROJ_DIR = os.path.dirname(os.path.abspath(__file__))
 
-config = configparser.RawConfigParser()
-config.read(os.path.join(PROJ_DIR, 'config.cfg'))
-
 
 STATIC_DIR = '/static'
 
 app = Flask(__name__, static_url_path='', static_folder='static', template_folder='static')
 app.debug = True
 
-app.config['MAIL_SERVER']= config.get('mail', 'host')
-app.config['MAIL_PORT'] = config.get('mail', 'port')
-app.config['MAIL_USERNAME'] = config.get('mail', 'user')
-app.config['MAIL_PASSWORD'] = config.get('mail', 'password')
-app.config['MAIL_USE_TLS'] = config.getboolean('mail', 'tls')
-app.config['MAIL_USE_SSL'] = config.getboolean('mail', 'ssl')
+app.config['MAIL_SERVER']= os.environ['MAIL_SERVER']
+app.config['MAIL_PORT'] = os.environ['MAIL_PORT']
+app.config['MAIL_USERNAME'] = os.environ['MAIL_USER']
+app.config['MAIL_PASSWORD'] = os.environ['MAIL_PASS']
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
 
 def print_exceptions(fn):
@@ -199,7 +196,7 @@ def trigger_view():
             for participant in participants:
                 partner = Partner.get(Partner.donor == participant, Partner.game == game)
                 url = request.url_root + 'user/' + str(participant.uuid)
-                msg = Message('Secret Santa: Auslosung', sender = config.get('mail', 'from'), recipients=[participant.mail])
+                msg = Message('Secret Santa: Auslosung', sender = "santa@secretsanta.com", recipients=[participant.mail])
                 msg.body = "Hallo %s,\n\n dein ausgeloster Partner ist %s. Damit niemand seinen Partner vergisst, kannst du in Zukunft unter %s nachschauen, wer es ist." % (participant.name, partner.gifted.name, url)
                 mail.send(msg)
 
