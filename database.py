@@ -19,7 +19,7 @@ class Game(BaseModel):
     name = CharField(unique=True)
     uuid = UUIDField(unique=True)
     imageurl = CharField()
-    text = TextField()
+    text = TextField(default="")
     triggered = BooleanField(default=False)
 
 
@@ -28,7 +28,7 @@ class Participant(BaseModel):
     uuid = UUIDField(unique=True)
     name = CharField()
     mail = CharField()
-    wishes = TextField()
+    wishes = TextField(default="")
 
 
 class Partner(BaseModel):
