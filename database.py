@@ -4,6 +4,11 @@ import datetime
 
 DATABASE = SqliteDatabase('secretsanta.db')
 
+try:
+    create_tables()
+except (OperationalError, ProgrammingError):
+    print("Tables already exists!")
+
 
 class BaseModel(Model):
     class Meta:
