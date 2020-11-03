@@ -4,11 +4,6 @@ import datetime
 
 DATABASE = SqliteDatabase('secretsanta.db')
 
-try:
-    create_tables()
-except (OperationalError, ProgrammingError):
-    print("Tables already exists!")
-
 
 class BaseModel(Model):
     class Meta:
@@ -19,7 +14,7 @@ class Game(BaseModel):
     name = CharField(unique=True)
     uuid = UUIDField(unique=True)
     imageurl = CharField()
-    text = TextField()
+    text = TextField(default="")
     triggered = BooleanField(default=False)
 
 
@@ -28,7 +23,7 @@ class Participant(BaseModel):
     uuid = UUIDField(unique=True)
     name = CharField()
     mail = CharField()
-    wishes = TextField()
+    wishes = TextField(default="")
 
 
 class Partner(BaseModel):
@@ -69,5 +64,11 @@ def create_participant(name, mail, gamename, uuid):
                 uuid=uuid)
     except IntegrityError:
         raise IntegrityError
+
+
+try:
+    create_tables()
+except (OperationalError, ProgrammingError):
+    print("Tables already exists!")
 
 
