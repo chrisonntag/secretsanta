@@ -9,7 +9,7 @@ import bleach
 import configparser
 from collections import defaultdict
 
-from flask import Flask, Response, render_template, make_response, url_for, redirect
+from flask import Flask, Response, render_template, make_response, url_for, redirect, abort
 from flask import jsonify
 from flask import request
 from flask_mail import Mail, Message
@@ -36,6 +36,11 @@ app.config['MAIL_PASSWORD'] = config.get('mail', 'password')
 app.config['MAIL_USE_TLS'] = config.getboolean('mail', 'tls')
 app.config['MAIL_USE_SSL'] = config.getboolean('mail', 'ssl')
 mail = Mail(app)
+
+@app.errorhandler(404)
+def not_found(e):
+# defining function
+    return render_template("/404.html")
 
 def print_exceptions(fn):
     @wraps(fn)
@@ -109,7 +114,7 @@ def create_view():
 
         try:
             db.create_game(name, key, imageurl, text)
-        except db.IntegrityError:
+        except db.IntegrityError as e:
             return get_error('Could not create game.')
 
         return redirect(url_for('root_view'))
@@ -171,7 +176,7 @@ def trigger_view():
                     for el in assigned:
                         try:
                             potential_partners.remove(el) # delete already assigned
-                        except ValueError:
+                        except ValueError as e:
                             continue
 
                 partner = random.choice(potential_partners)
@@ -200,33 +205,46 @@ def trigger_view():
                 partner = Partner.get(Partner.donor == participant, Partner.game == game)
                 url = request.url_root + 'user/' + str(participant.uuid)
                 msg = Message('Secret Santa: Auslosung', sender = config.get('mail', 'from'), recipients=[participant.mail])
-                msg.body = "Hallo %s,\n\n dein ausgeloster Partner ist %s. Damit niemand seinen Partner vergisst, kannst du in Zukunft unter %s nachschauen, wer es ist." % (participant.name, partner.gifted.name, url)
+                msg.body = "Hallo %s,\n\n dein ausgeloster Partner ist %s. Damit niemand seinen Partner vergisst und jeder up-to-date ist, was sich jemand wuenscht, kannst du in Zukunft unter %s nachschauen, wer es ist." % (participant.name, partner.gifted.name, url)
                 mail.send(msg)
 
             return redirect(url_for('game_view', game=game.uuid))
 
 
-@app.route('/games/<game>', methods=['GET', 'POST'])
+@app.route('/games/<game>', methods=['GET'])
 @print_exceptions
 def game_view(game=None):
-    if request.method == 'POST':
-        # delete
-        game_uuid = request.form.get('uuid', None)
-        if game_uuid is not None:
-            game = Game.get(Game.uuid == game_uuid)
-            Participant.delete().where(Participant.game == game).execute()
-            Game.delete().where(Game.uuid == game_uuid).execute()
-        return redirect(url_for('root_view'))
+    try:
+        game = Game.get(Game.uuid == game)
+    except Exception as e:
+        game = None 
 
-    game = Game.get(Game.uuid == game)
-    participants = Participant.select().where(Participant.game == game)
-    return render_template('/game.html', game=game, participants=participants)
+    if game:
+        participants = Participant.select().where(Participant.game == game)
+        return render_template('/game.html', game=game, participants=participants)
+    else:
+        abort(404)
 
+
+@app.route('/games/<game>', methods=['DELETE'])
+@print_exceptions
+def game_delete(game):
+    Participant.delete().where(Participant.game == game).execute()
+    Game.delete().where(Game.uuid == game).execute()
+    return "Game was successfully deleted"
+ 
 
 @app.route('/user/<user>', methods=['GET', 'POST'])
 @print_exceptions
 def user_view(user=None):
-    user = Participant.get(Participant.uuid == user)
+    try:
+        user = Participant.get(Participant.uuid == user)
+    except Exception as e:
+        user = None
+
+    if not user:
+        abort(404)
+        
     partner = Partner.get(Partner.donor == user, Partner.game == user.game)
 
     if request.method == 'POST':

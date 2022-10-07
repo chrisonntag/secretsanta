@@ -78,7 +78,7 @@
                                     <br />
                                     <ul>
                                         {% for p in participants %}
-                                            <li><a href="/user/{{p.uuid}}">{{p.name}} &lt;{{p.mail}}&gt;</a></li>
+                                            <li>{{p.name}} &lt;{{p.mail}}&gt;</li>
                                         {% endfor %}
                                     </ul>     
                                 {% else %}
@@ -92,7 +92,7 @@
                                     <br />
                                     <br />
                                 {% endif %}
-                                <form method="post">
+                                <form method="delete">
                                     {% if not game.triggered %}
                                         <a href="/register?g={{game.uuid}}" class="button is-info is-medium">Teilnehmen</a>
                                         {% if participants %}
@@ -105,7 +105,7 @@
                                         <a disabled class="button is-info is-medium">Teilnehmen</a>
                                     {% endif %}
                                     <input type="hidden" value="{{game.uuid}}" name="uuid" />
-                                    <input type="submit" class="button is-danger is-medium" value="L&ouml;schen" />
+                                    <!--<input type="submit" class="button is-danger is-medium" value="L&ouml;schen" />-->
                                 </form>
                             </div>
                         </div>
